@@ -9,7 +9,14 @@
     function OnPlayerConnect($playerid) {
         /* @var $player Player */
         $player = Player::getPlayer($playerid);
-        $player->x = 0.0;
-        $player->y = 0.0;
-        $player->z = 13.0;
+        // This will return current X coord
+        $x = $player->x;
+        // This will change player to new X coord
+        $player->x = $x + 10.0;
+        
+        // This will return player health
+        if ($player->health < 30) {
+            // This will set player health to 30
+            $player->health = 30;
+        }
     }
