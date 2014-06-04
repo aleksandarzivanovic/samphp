@@ -180,18 +180,8 @@ class Player {
 
     private function getPos() {
         if ($this->validPlayer()) {
-
-            $x = 0.0;
-            $y = 0.0;
-            $z = 0.0;
-
-            GetPlayerPos($this->playerId, $x, $y, $z);
-
-            $data = array(
-                'x' => $x,
-                'y' => $y,
-                'z' => $z
-            );
+            $data = array();
+            GetPlayerPos($this->playerId, $data['x'], $data['y'], $data['z']);
 
             return $data;
         }
