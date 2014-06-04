@@ -288,8 +288,7 @@ class Player {
 
     public static function getPlayer($playerid) {
         if (IsPlayerConnected($playerid)) {
-            if (!self::$players[$playerid] ||
-                    (self::$players[$playerid] && !IsPlayerConnected($playerid))) {
+            if (!self::$players[$playerid]) {
                 self::$players[$playerid] = new self($playerid);
             }
 
