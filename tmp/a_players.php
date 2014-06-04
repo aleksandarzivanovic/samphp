@@ -57,3 +57,27 @@ function SetPlayerArmour($playerid, $armour) {
 function GetPlayerArmour($playerid, &$armour) {
     
 }
+
+function GetPlayerWeaponState($playerid) {
+    
+}
+
+function GetPlayerTargetPlayer($playerid) {
+    
+}
+
+function SetPlayerTeam($playerid, $teamid) {
+    
+}
+
+function GetPlayerTeam($playerid) {
+    
+}
+
+function SetPlayerScore($playerid, $score) {
+    
+}
+
+function GetPlayerScore($playerid) {
+    
+}
