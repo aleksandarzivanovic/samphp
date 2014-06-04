@@ -81,3 +81,87 @@ function SetPlayerScore($playerid, $score) {
 function GetPlayerScore($playerid) {
     
 }
+
+function GetPlayerDrunkLevel($playerid) {
+    
+}
+
+function SetPlayerDrunkLevel($playerid, $level) {
+    
+}
+
+function SetPlayerColor($playerid, $color) {
+    
+}
+
+function GetPlayerColor($playerid) {
+    
+}
+
+function SetPlayerSkin($playerid, $skinid) {
+    
+}
+
+function GetPlayerSkin($playerid) {
+    
+}
+
+function SetPlayerArmedWeapon($playerid, $weaponid) {
+    
+}
+
+function GetPlayerWeapon($playerid) {
+    
+}
+
+function SetPlayerName($playerid, $name) {
+    
+}
+
+function GetPlayerName($playerid) {
+    
+}
+
+function GetPlayerAmmo($playerid) {
+    
+}
+
+function GivePlayerMoney($playerid, $money) {
+    
+}
+
+function GetPlayerMoney($playerid) {
+    
+}
+
+function GetPlayerState($playerid) {
+    
+}
+
+function GetPlayerIp($playerid) {
+    
+}
+
+function GetPlayerPing($playerid) {
+    
+}
+
+function GetPlayerKeys($playerid) {
+    
+}
+
+function SetPlayerTime($playerid) {
+    
+}
+
+function GetPlayerTime($playerid) {
+    
+}
+
+function TogglePlayerClock($playerid, $toggle) {
+    
+}
+
+function SetPlayerWeather($playerid, $weather) {
+    
+}
