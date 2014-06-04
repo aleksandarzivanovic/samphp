@@ -8,12 +8,20 @@ class Player {
         'x' => array('setPos', 'getPos'),
         'y' => array('setPos', 'getPos'),
         'z' => array('setPos', 'getPos'),
-        'rot' => array('setFacingAngle', 'getFacingAngle')
+        'rot' => array('setFacingAngle', 'getFacingAngle'),
+        'int' => array('setInterior', 'getInterior'),
+        'vw' => array('setVirtualWorld', 'getVirtualWorld'),
+        'health' => array('setHealth', 'getHealth'),
+        'armour' => array('setArmour', 'getArmour')
     );
     private $x = 0.0;
     private $y = 0.0;
     private $z = 0.0;
     private $rot = 0.0;
+    private $int = 0;
+    private $vw = 0;
+    private $health = 100.0;
+    private $armour = 0.0;
 
     public function __construct($playerid = -1) {
         $this->playerId = $playerid;
@@ -49,8 +57,90 @@ class Player {
         }
     }
 
+    private function setArmour() {
+        if ($this->validPlayer()) {
+            if (is_numeric($this->armour)) {
+                return SetPlayerArmour($this->playerId, $this->armour);
+            } else {
+                return false;
+            }
+        } else {
+            return null;
+        }
+    }
+
+    private function getArmour() {
+        if ($this->validPlayer()) {
+            $armour = 0.0;
+            GetPlayerArmour($this->playerId, $armour);
+
+            return $armour;
+        } else {
+            return null;
+        }
+    }
+
+    private function setHealth() {
+        if ($this->validPlayer()) {
+            if (is_numeric($this->health)) {
+                return SetPlayerHealth($this->playerId, $this->health);
+            } else {
+                return false;
+            }
+        } else {
+            return NULL;
+        }
+    }
+
+    private function getHealth() {
+        if ($this->validPlayer()) {
+            $health = 100.0;
+            GetPlayerHealth($this->playerId, $health);
+
+            return $health;
+        } else {
+            return null;
+        }
+    }
+
+    private function setInterior() {
+        if ($this->validPlayer()) {
+            if (is_numeric($this->int)) {
+                return SetPlayerInterior($this->playerId, $this->int);
+            }
+        } else {
+            return null;
+        }
+    }
+
+    private function getInterior() {
+        if ($this->validPlayer()) {
+            return GetPlayerInterior($this->playerId);
+        } else {
+            return null;
+        }
+    }
+
+    private function setVirtualWorld() {
+        if ($this->validPlayer()) {
+            if (is_numeric($this->vw)) {
+                return SetPlayerVirtualWorld($this->playerId, $this->vw);
+            }
+        } else {
+            return null;
+        }
+    }
+
+    private function getVirtualWorld() {
+        if ($this->validPlayer()) {
+            return GetPlayerVirtualWorld($this->playerId);
+        } else {
+            return null;
+        }
+    }
+
     private function setFacingAngle() {
-        if ($this->playerValid()) {
+        if ($this->validPlayer()) {
             if (is_numeric($this->rot)) {
                 return SetPlayerFacingAngle($this->playerId, $this->rot);
             } else {
@@ -62,18 +152,18 @@ class Player {
     }
 
     private function getFacingAngle() {
-        if ($this->playerValid()) {
+        if ($this->validPlayer()) {
             $rot = 0.0;
-            
+
             GetPlayerFacingAngle($this->playerId, $rot);
-            return array('rot' => $rot);
+            return $rot;
         } else {
             return null;
         }
     }
 
     private function setPos() {
-        if ($this->playerValid()) {
+        if ($this->validPlayer()) {
             $x = $this->x;
             $y = $this->y;
             $z = $this->z;
@@ -89,7 +179,7 @@ class Player {
     }
 
     private function getPos() {
-        if ($this->playerValid()) {
+        if ($this->validPlayer()) {
 
             $x = 0.0;
             $y = 0.0;
@@ -109,7 +199,7 @@ class Player {
         return null;
     }
 
-    private function playerValid() {
+    private function validPlayer() {
         return ($this->playerId != -1 && IsPlayerConnected($this->playerId));
     }
 
