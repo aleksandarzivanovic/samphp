@@ -2,35 +2,7 @@
 
 class Player {
 
-    private $onChange = array(
-        'x' => array('setPos', 'getPos'),
-        'y' => array('setPos', 'getPos'),
-        'z' => array('setPos', 'getPos'),
-        'rot' => array('setFacingAngle', 'getFacingAngle'),
-        'int' => array('setInterior', 'getInterior'),
-        'vw' => array('setVirtualWorld', 'getVirtualWorld'),
-        'health' => array('setHealth', 'getHealth'),
-        'armour' => array('setArmour', 'getArmour'),
-        'weapon_state' => array('', 'getWeaponState'),
-        'target' => array('', 'getTarget'),
-        'team' => array('setTeam', 'getTeam'),
-        'score' => array('setScore', 'getScore'),
-        'drunk' => array('setDrunk', 'getDrunk'),
-        'color' => array('setColor', 'getColor'),
-        'skin' => array('setSkin', 'getSkin'),
-        'armed_weapon' => array('setArmed', 'getArmed'),
-        'name' => array('setName', 'getName'),
-        'current_ammo' => array('', 'getAmmo'),
-        'money' => array('setMoney', 'getMoney'),
-        'state' => array('', 'getState'),
-        'show_clock' => array('setClock', 'getClock'),
-        'weather' => array('setWeather', 'getWeather'),
-        'wanted_level' => array('setWanted', 'getWanted'),
-        'figth_style' => array('setFStyle', 'getFStyle'),
-        'controls' => array('setControls', 'getControls')
-    );
     public static $players;
-    private $playerId = -1;
     public $x = 0.0;
     public $y = 0.0;
     public $z = 0.0;
@@ -56,6 +28,42 @@ class Player {
     public $wanted_level = 0;
     public $figth_style = 0;
     public $controls = 1;
+    public $surfing_vehicle = -1;
+    public $surfing_object = -1;
+
+    #
+    private $playerId = -1;
+    private $onChange = array(
+        'x' => array('setPos', 'getPos'),
+        'y' => array('setPos', 'getPos'),
+        'z' => array('setPos', 'getPos'),
+        'rot' => array('setFacingAngle', 'getFacingAngle'),
+        'int' => array('setInterior', 'getInterior'),
+        'vw' => array('setVirtualWorld', 'getVirtualWorld'),
+        'health' => array('setHealth', 'getHealth'),
+        'armour' => array('setArmour', 'getArmour'),
+        'weapon_state' => array('', 'getWeaponState'),
+        'target' => array('', 'getTarget'),
+        'team' => array('setTeam', 'getTeam'),
+        'score' => array('setScore', 'getScore'),
+        'drunk' => array('setDrunk', 'getDrunk'),
+        'color' => array('setColor', 'getColor'),
+        'skin' => array('setSkin', 'getSkin'),
+        'armed_weapon' => array('setArmed', 'getArmed'),
+        'name' => array('setName', 'getName'),
+        'current_ammo' => array('', 'getAmmo'),
+        'money' => array('setMoney', 'getMoney'),
+        'state' => array('', 'getState'),
+        'show_clock' => array('setClock', 'getClock'),
+        'weather' => array('setWeather', 'getWeather'),
+        'wanted_level' => array('setWanted', 'getWanted'),
+        'figth_style' => array('setFStyle', 'getFStyle'),
+        'controls' => array('setControls', 'getControls'),
+        'surfing_vehicle' => array('', 'getSurfingVehicle'),
+        'surfing_object' => array('', 'getSurfingObject')
+    );
+
+    #
 
     public function __construct($playerid = -1) {
         $this->playerId = $playerid;
@@ -67,6 +75,14 @@ class Player {
         } else {
             return NULL;
         }
+    }
+
+    private function getSurfingVehicle() {
+        return GetPlayerSurfingVehicleID($this->playerId);
+    }
+
+    private function getSurfingObject() {
+        return GetPlayerSurfingObjectID($this->playerId);
     }
 
     private function setControls() {
@@ -282,9 +298,10 @@ class Player {
             return null;
         }
 
-        if (isset($this->$var) && $var != 'playerId' && $var != 'onChange') {
+        if ($var != 'playerId' && $var != 'onChange') {
+            $this->$var = $val;
+
             if (array_key_exists($var, $this->onChange)) {
-                $this->$var = $val;
 
                 $function = $this->onChange[$var][0];
                 if (strlen($function)) {
@@ -297,7 +314,7 @@ class Player {
     public function __get($var) {
 
         if ($this->validPlayer() && isset($this->$var)) {
-            if (!array_key_exists($var, $this->onChange)) {
+            if (array_key_exists($var, $this->onChange)) {
                 $function = $this->onChange[$var][1];
 
                 if (!strlen($function)) {

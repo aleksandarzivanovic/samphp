@@ -189,3 +189,11 @@ function GetPlayerFightingStyle($playerid) {
 function TogglePlayerControllable($playerid, $toggle) {
     
 }
+
+function GetPlayerSurfingVehicleID($playerid) {
+    
+}
+
+function GetPlayerSurfingObjectID($playerid) {
+    
+}

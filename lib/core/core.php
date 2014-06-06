@@ -14,11 +14,13 @@ require_once 'lib/player.php';
 require_once 'lib/core/events.php';
 require_once 'lib/core/colors.php';
 
+//Player Callbacks
 Events::init(Events::PLAYER_CONNECT);
 Events::init(Events::PLAYER_DISCONNECT);
 Events::init(Events::PLAYER_COMMAND);
 Events::init(Events::PLAYER_SPAWN);
 
+// Server Callbacks
 Events::init(Events::GAMEMODE_INIT);
 Events::init(Events::GAMEMODE_EXIT);
 
