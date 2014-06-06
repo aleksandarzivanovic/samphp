@@ -185,3 +185,7 @@ function SetPlayerFightingStyle($playerid, $style) {
 function GetPlayerFightingStyle($playerid) {
     
 }
+
+function TogglePlayerControllable($playerid, $toggle) {
+    
+}

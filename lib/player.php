@@ -24,9 +24,11 @@ class Player {
         'money' => array('setMoney', 'getMoney'),
         'state' => array('', 'getState'),
         'show_clock' => array('setClock', 'getClock'),
-        'weather' => array('setWeather', 'getWeather')
+        'weather' => array('setWeather', 'getWeather'),
+        'wanted_level' => array('setWanted', 'getWanted'),
+        'figth_style' => array('setFStyle', 'getFStyle'),
+        'controls' => array('setControls', 'getControls')
     );
-    
     public static $players;
     private $playerId = -1;
     public $x = 0.0;
@@ -51,6 +53,9 @@ class Player {
     public $state = 0;
     public $show_clock = 1;
     public $weather = 0;
+    public $wanted_level = 0;
+    public $figth_style = 0;
+    public $controls = 1;
 
     public function __construct($playerid = -1) {
         $this->playerId = $playerid;
@@ -62,6 +67,30 @@ class Player {
         } else {
             return NULL;
         }
+    }
+
+    private function setControls() {
+        return TogglePlayerControllable($this->playerId, $this->controls);
+    }
+
+    private function getControls() {
+        return $this->controls;
+    }
+
+    private function setFStyle() {
+        return SetPlayerFightingStyle($this->playerId, $this->figth_style);
+    }
+
+    private function getFStyle() {
+        return GetPlayerFightingStyle($this->playerId);
+    }
+
+    private function setWanted() {
+        return SetPlayerWantedLevel($this->playerId, $this->wanted_level);
+    }
+
+    private function getWanted() {
+        return GetPlayerWantedLevel($this->playerId);
     }
 
     private function setWeather() {
@@ -239,7 +268,6 @@ class Player {
     }
 
     private function getPos() {
-        $data = array();
         $data = GetPlayerPos($this->playerId);
 
         return $data;

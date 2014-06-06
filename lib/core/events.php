@@ -7,6 +7,7 @@ class Events {
     const PLAYER_CONNECT = 10001;
     const PLAYER_DISCONNECT = 10002;
     const PLAYER_COMMAND = 10003;
+    const PLAYER_SPAWN = 10004;
     
     const GAMEMODE_INIT = 20001;
     const GAMEMODE_EXIT = 20002;

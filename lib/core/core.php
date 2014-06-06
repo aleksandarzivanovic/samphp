@@ -14,12 +14,15 @@ require_once 'lib/player.php';
 require_once 'lib/core/events.php';
 require_once 'lib/core/colors.php';
 
+Events::init(Events::PLAYER_CONNECT);
+Events::init(Events::PLAYER_DISCONNECT);
+Events::init(Events::PLAYER_COMMAND);
+Events::init(Events::PLAYER_SPAWN);
+
 Events::init(Events::GAMEMODE_INIT);
+Events::init(Events::GAMEMODE_EXIT);
 
 function OnGameModeInit() {
-    Events::init(Events::PLAYER_CONNECT);
-    Events::init(Events::PLAYER_DISCONNECT);
-
     Events::fire(Events::GAMEMODE_INIT);
 }
 
@@ -33,6 +36,10 @@ function OnPlayerConnect($playerid) {
 
 function OnPlayerDisconnect($playerid, $reason) {
     Events::fire(Events::PLAYER_DISCONNECT, $playerid, $reason);
+}
+
+function OnPlayerSpawn($playerid) {
+    Events::fire(Events::PLAYER_SPAWN, $playerid);
 }
 
 function OnPlayerCommandText($playerid, $text) {
