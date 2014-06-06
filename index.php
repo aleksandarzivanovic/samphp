@@ -31,6 +31,11 @@ Events::add(Events::PLAYER_SPAWN, function ($playerid) {
         $p->x = 123.00;
         $p->y = 225.00;
         $p->z = 1014.33;
+        sleep(3);
         $p->controls = 1;
+    }
+
+    if ($p->wanted_level) {
+        $p->sendMessage('You have wanted level ' . $p->wanted_level, Color::blue);
     }
 });
