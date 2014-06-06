@@ -2,8 +2,6 @@
 
 class Player {
 
-    public static $players;
-    public $playerId = -1;
     private $onChange = array(
         'x' => array('setPos', 'getPos'),
         'y' => array('setPos', 'getPos'),
@@ -28,6 +26,9 @@ class Player {
         'show_clock' => array('setClock', 'getClock'),
         'weather' => array('setWeather', 'getWeather')
     );
+    
+    public static $players;
+    private $playerId = -1;
     public $x = 0.0;
     public $y = 0.0;
     public $z = 0.0;
@@ -55,6 +56,14 @@ class Player {
         $this->playerId = $playerid;
     }
 
+    public function sendMessage($string, $color) {
+        if ($this->validPlayer()) {
+            return SendClientMessage($this->playerId, $color, $string);
+        } else {
+            return NULL;
+        }
+    }
+
     private function setWeather() {
         return SetPlayerWeather($this->playerId, $this->weather);
     }
@@ -78,7 +87,7 @@ class Player {
     private function setMoney() {
         $money = GetPlayerMoney($this->playerId);
 
-        return GivePlayerMoney($playerid, $money + $this->money);
+        return GivePlayerMoney($this->playerId, $money + $this->money);
     }
 
     private function getMoney() {
@@ -259,12 +268,8 @@ class Player {
 
     public function __get($var) {
 
-        if (!$this->validPlayer()) {
-            return null;
-        }
-
-        if (isset($this->$var)) {
-            if (array_key_exists($var, $this->onChange)) {
+        if ($this->validPlayer() && isset($this->$var)) {
+            if (!array_key_exists($var, $this->onChange)) {
                 $function = $this->onChange[$var][1];
 
                 if (!strlen($function)) {

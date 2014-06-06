@@ -165,3 +165,23 @@ function TogglePlayerClock($playerid, $toggle) {
 function SetPlayerWeather($playerid, $weather) {
     
 }
+
+function SendClientMessage($playerid, $color, $text) {
+    
+}
+
+function SetPlayerWantedLevel($playerid, $level) {
+    
+}
+
+function GetPlayerWantedLevel($playerid) {
+    
+}
+
+function SetPlayerFightingStyle($playerid, $style) {
+    
+}
+
+function GetPlayerFightingStyle($playerid) {
+    
+}

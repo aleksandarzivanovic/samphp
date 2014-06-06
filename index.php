@@ -1,22 +1,17 @@
 <?php
 
-    require_once 'tmp/a_http.php';
-    require_once 'tmp/a_npc.php';
-    require_once 'tmp/a_players.php';
-    
-    require_once 'lib/player.php';
-    
-    function OnPlayerConnect($playerid) {
-        /* @var $player Player */
-        $player = Player::getPlayer($playerid);
-        // This will return current X coord
-        $x = $player->x;
-        // This will change player to new X coord
-        $player->x = $x + 10.0;
-        
-        // This will return player health
-        if ($player->health < 30) {
-            // This will set player health to 30
-            $player->health = 30;
-        }
-    }
+include './lib/core/core.php';
+
+Events::add(Events::PLAYER_CONNECT, function ($playerid) {
+    /* @var $p Player */
+    $p = Player::getPlayer($playerid);
+    $spawns = array(2652.6418, -1989.9175, 13.9988, 182.7107);
+
+    $msg = 'Hello ' . $p->name . ' welcome to our PHP server';
+    $p->sendMessa20ge($msg, Color::yellow);
+
+    $p->x = $spawns[0];
+    $p->y = $spawns[1];
+    $p->z = $spawns[2];
+    $p->rot = $spawns[3];
+});
