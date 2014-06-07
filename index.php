@@ -1,62 +1,23 @@
 <?php
 
 include './lib/core/core.php';
+include './dialogs.php';
 
 Events::add(Events::PLAYER_CONNECT, function ($playerid) {
     /* @var $p Player */
     $p = Player::getPlayer($playerid);
 
     $msg = 'Hello ' . $p->name . ' welcome to our PHP server';
-    $p->sendMessa20ge($msg, Color::yellow);
-    $loginSuccess = function ($player, $password) {
-        /* @var $player Player */
-        $data = file_get_contents('/Players/' . $player->name . '.cfg');
-        $datas = split('=', $data);
+    $p->sendMessage($msg, Color::yellow);
 
-        if ($datas[1] == $password) {
-            $player->spawn();
-        } else {
-            Dialog::setInfo('login', "Enter password.\nWrong!!!");
-            Dialog::show($player->getId(), 'login');
-        }
-    };
-
-    $loginFail = function ($player, $password) {
-        $player->kick();
-    };
-
-    Dialog::add(Dialog::STYLE_PASSWORD, 'Login', 'Login Window', 'Exit', 'login');
-    Dialog::setInfo('login', 'Enter password to login');
-    Dialog::on('login', array(
-        'success' => $loginSuccess,
-        'fail' => $loginFail
-    ));
 
     if (!file_exists('/Players/' . $p->name . '.cfg')) {
-        $id = Dialog::add(Dialog::STYLE_PASSWORD, 'Register', 'Next', 'Close');
-
-        $success = function ($player, $password) {
-            $pass = md5($password);
-            /* @var $player Player */
-            $path = '/Players/' . $player->name . '.cfg';
-            file_put_contents($path, 'password=' . $pass);
-        };
-        $fail = function ($player, $password) {
-            /* @var $player Player */
-            $player->sendMessage('Registration canceled.', Color::red);
-            $player->kick();
-        };
-
-        Dialog::setInfo($id, 'Enter password.');
-        Dialog::on($id, array(
-            'success' => $success,
-            'fail' => $fail
-        ));
-
-        Dialog::show($playerid, $id);
+        $dialogid = DIALOG_REGISTER;
     } else {
-        
+        $dialogid = DIALOG_LOGIN;
     }
+
+    $p->showDialog($dialogid);
 });
 
 Events::add(Events::PLAYER_SPAWN, function ($playerid) {

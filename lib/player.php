@@ -73,14 +73,18 @@ class Player {
         return $this->playerId;
     }
 
+    public function showDialog($dialogid) {
+        return Dialog::show($this->playerId, $dialogid);
+    }
+
     public function ban() {
         return Ban($this->playerId);
     }
-    
+
     public function kick() {
         return Kick($this->playerId);
     }
-    
+
     public function spawn() {
         return SpawnPlayer($this->playerId);
     }

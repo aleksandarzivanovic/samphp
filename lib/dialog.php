@@ -15,15 +15,13 @@ class Dialog {
     const STYLE_LIST = 2;
     const STYLE_PASSWORD = 3;
 
-    public static function add($style, $caption, $b1, $b2, $customid = FALSE) {
-        if ($style < self::STYLE_MSGBOX || $style > self::STYLE_PASSWORD || !strlen($b1)) {
+    public static function add($style, $caption, $b1, $b2, $id = FALSE) {
+        if (!is_numeric($id) || strpos($id, '.') !== false) {
             return false;
         }
 
-        if ($customid !== FALSE) {
-            $id = $customid;
-        } else {
-            $id = count(self::$dialogs);
+        if ($style < self::STYLE_MSGBOX || $style > self::STYLE_PASSWORD || !strlen($b1)) {
+            return false;
         }
 
         $b2 = (strlen($b2) > 0 ? $b2 : '');
@@ -32,7 +30,7 @@ class Dialog {
             'style' => $style,
             'caption' => $caption,
             'button1' => $b1,
-            'button2' => $b2
+            'button2' => $b2,
         );
 
         return $id;
