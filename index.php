@@ -3,17 +3,36 @@
 include './lib/core/core.php';
 
 Events::add(Events::PLAYER_CONNECT, function ($playerid) {
-
+    /* @var $p Player */
     $p = Player::getPlayer($playerid);
-    $spawns = array(2652.6418, -1989.9175, 13.9988, 182.7107);
 
     $msg = 'Hello ' . $p->name . ' welcome to our PHP server';
     $p->sendMessa20ge($msg, Color::yellow);
 
-    $p->x = $spawns[0];
-    $p->y = $spawns[1];
-    $p->z = $spawns[2];
-    $p->rot = $spawns[3];
+    if (!file_exists('/Players/' . $p->name . '.cfg')) {
+        $id = Dialog::add(Dialog::STYLE_PASSWORD, 'Register', 'Next', 'Close');
+        
+        $success = function ($player, $password) {
+            $pass = md5($password);
+            /* @var $player Player */
+            file_put_contents('/Players/' . $player->name, 'password=' . $pass);
+        };
+        $fail = function ($player, $password) {
+            /* @var $player Player */
+            $player->sendMessage('Registration canceled.', Color::red);
+            Kick($player->getId());
+        };
+
+        Dialog::setInfo($id, 'Enter password.');
+        Dialog::on($id, array(
+            'success' => $success,
+            'fail' => $fail
+        ));
+        
+        Dialog::show($playerid, $id);
+    } else {
+        
+    }
 });
 
 Events::add(Events::PLAYER_SPAWN, function ($playerid) {

@@ -12,6 +12,7 @@ require_once 'tmp/a_players.php';
 
 require_once 'lib/player.php';
 require_once 'lib/core/events.php';
+require_once 'lib/dialog.php';
 require_once 'lib/core/colors.php';
 
 //Player Callbacks
@@ -46,4 +47,12 @@ function OnPlayerSpawn($playerid) {
 
 function OnPlayerCommandText($playerid, $text) {
     Events::fire(Events::PLAYER_COMMAND, $playerid, $text);
+}
+
+function OnDialogResponse($playerid, $dialogid, $response, $listitem, $inputtext) {
+    if ($response) {
+        Dialog::success($playerid, $dialogid, $inputtext, $listitem);
+    } else {
+        Dialog::fail($playerid, $dialogid, $inputtext, $listitem);
+    }
 }

@@ -197,3 +197,7 @@ function GetPlayerSurfingVehicleID($playerid) {
 function GetPlayerSurfingObjectID($playerid) {
     
 }
+
+function ShowPlayerDialog($playerid, $dialogid, $style, $caption, $info, $button1, $button2) {
+    
+}

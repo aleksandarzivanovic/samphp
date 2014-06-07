@@ -69,6 +69,10 @@ class Player {
         $this->playerId = $playerid;
     }
 
+    public function getId() {
+        return $this->playerId;
+    }
+
     public function sendMessage($string, $color) {
         if ($this->validPlayer()) {
             return SendClientMessage($this->playerId, $color, $string);
