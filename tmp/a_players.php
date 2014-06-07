@@ -201,3 +201,15 @@ function GetPlayerSurfingObjectID($playerid) {
 function ShowPlayerDialog($playerid, $dialogid, $style, $caption, $info, $button1, $button2) {
     
 }
+
+function SpawnPlayer($playerid) {
+    
+}
+
+function Kick($playerid) {
+    
+}
+
+function Ban($playerid) {
+    
+}

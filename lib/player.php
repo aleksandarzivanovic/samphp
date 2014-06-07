@@ -73,6 +73,18 @@ class Player {
         return $this->playerId;
     }
 
+    public function ban() {
+        return Ban($this->playerId);
+    }
+    
+    public function kick() {
+        return Kick($this->playerId);
+    }
+    
+    public function spawn() {
+        return SpawnPlayer($this->playerId);
+    }
+
     public function sendMessage($string, $color) {
         if ($this->validPlayer()) {
             return SendClientMessage($this->playerId, $color, $string);

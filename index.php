@@ -8,19 +8,43 @@ Events::add(Events::PLAYER_CONNECT, function ($playerid) {
 
     $msg = 'Hello ' . $p->name . ' welcome to our PHP server';
     $p->sendMessa20ge($msg, Color::yellow);
+    $loginSuccess = function ($player, $password) {
+        /* @var $player Player */
+        $data = file_get_contents('/Players/' . $player->name . '.cfg');
+        $datas = split('=', $data);
+
+        if ($datas[1] == $password) {
+            $player->spawn();
+        } else {
+            Dialog::setInfo('login', "Enter password.\nWrong!!!");
+            Dialog::show($player->getId(), 'login');
+        }
+    };
+
+    $loginFail = function ($player, $password) {
+        $player->kick();
+    };
+
+    Dialog::add(Dialog::STYLE_PASSWORD, 'Login', 'Login Window', 'Exit', 'login');
+    Dialog::setInfo('login', 'Enter password to login');
+    Dialog::on('login', array(
+        'success' => $loginSuccess,
+        'fail' => $loginFail
+    ));
 
     if (!file_exists('/Players/' . $p->name . '.cfg')) {
         $id = Dialog::add(Dialog::STYLE_PASSWORD, 'Register', 'Next', 'Close');
-        
+
         $success = function ($player, $password) {
             $pass = md5($password);
             /* @var $player Player */
-            file_put_contents('/Players/' . $player->name, 'password=' . $pass);
+            $path = '/Players/' . $player->name . '.cfg';
+            file_put_contents($path, 'password=' . $pass);
         };
         $fail = function ($player, $password) {
             /* @var $player Player */
             $player->sendMessage('Registration canceled.', Color::red);
-            Kick($player->getId());
+            $player->kick();
         };
 
         Dialog::setInfo($id, 'Enter password.');
@@ -28,7 +52,7 @@ Events::add(Events::PLAYER_CONNECT, function ($playerid) {
             'success' => $success,
             'fail' => $fail
         ));
-        
+
         Dialog::show($playerid, $id);
     } else {
         
