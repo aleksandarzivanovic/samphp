@@ -9,6 +9,7 @@
 require_once 'tmp/a_http.php';
 require_once 'tmp/a_npc.php';
 require_once 'tmp/a_players.php';
+require_once 'tmp/a_vehicles.php';
 
 require_once 'lib/player.php';
 require_once 'lib/core/events.php';

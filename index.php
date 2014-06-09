@@ -23,6 +23,12 @@ Events::add(Events::PLAYER_CONNECT, function ($playerid) {
 Events::add(Events::PLAYER_SPAWN, function ($playerid) {
     /* @var $p Player */
     $p = Player::getPlayer($playerid);
+    /* @var $v Vehicle */
+    $v = Vehicle::createVehicle(411);
+    $v->x = 125.0;
+    $v->y = 227.0;
+    $v->z = 1014.33;
+    $v->rot = $p->rot;
 
     if ($p->health < 30) {
         $p->health = 30;
